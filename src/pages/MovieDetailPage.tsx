@@ -1,27 +1,26 @@
-// src/pages/MovieDetailPage.tsx
 import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState, AppDispatch } from '../redux/store';
-import { fetchMovieDetail, clearMovieDetail } from '../redux/movieDetailSlice';
-import { resetMoviesState } from '../redux/moviesSlice';
+import { RootState, AppDispatch } from '@redux/store';
+import { fetchMovieDetail, clearMovieDetail } from '@redux/movieDetailSlice';
+import { resetMoviesState } from '@redux/moviesSlice';
 import {
   Card,
-  CardContent,
   CardMedia,
+  CardContent,
   Typography,
-  Stack,
-  Container,
   Box,
   IconButton,
   Breadcrumbs,
-  Link,
+  Link as MuiLink,
+  Container,
+  Stack,
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import MovieDetailSkeleton from '../components/Skeleton/MovieDetailSkeleton';
-import SeasonAccordion from '../components/SeasonAccordion/SeasonAccordion';
-import { ErrorDisplay } from '../utils/ui/errorDisplay';
-import { formatRuntime } from '../utils/formatting/stringUtils';
+import MovieDetailSkeleton from '@components/Skeleton/MovieDetailSkeleton';
+import SeasonAccordion from '@components/SeasonAccordion';
+import { ErrorDisplay } from '@utils/ui/errorDisplay';
+import { formatRuntime } from '@utils/formatting/stringUtils';
 
 const MovieDetailPage = () => {
   const { id } = useParams();
@@ -55,7 +54,7 @@ const MovieDetailPage = () => {
         <ArrowBackIcon />
       </IconButton>
       <Breadcrumbs aria-label="breadcrumb">
-        <Link
+        <MuiLink
           component="button"
           underline="hover"
           color="inherit"
@@ -63,7 +62,7 @@ const MovieDetailPage = () => {
           sx={{ color: 'secondary.main' }}
         >
           Home
-        </Link>
+        </MuiLink>
         <Typography color="text.primary">
           {selectedMovie?.Title || 'Movie Details'}
         </Typography>
@@ -84,7 +83,7 @@ const MovieDetailPage = () => {
             <ArrowBackIcon />
           </IconButton>
           <Breadcrumbs aria-label="breadcrumb">
-            <Link
+            <MuiLink
               component="button"
               underline="hover"
               color="inherit"
@@ -92,7 +91,7 @@ const MovieDetailPage = () => {
               sx={{ color: 'secondary.main' }}
             >
               Home
-            </Link>
+            </MuiLink>
             <Typography color="primary">Loading details...</Typography>
           </Breadcrumbs>
         </Box>
@@ -114,7 +113,7 @@ const MovieDetailPage = () => {
             <ArrowBackIcon />
           </IconButton>
           <Breadcrumbs aria-label="breadcrumb">
-            <Link
+            <MuiLink
               component="button"
               underline="hover"
               color="inherit"
@@ -122,7 +121,7 @@ const MovieDetailPage = () => {
               sx={{ color: 'secondary.main' }}
             >
               Home
-            </Link>
+            </MuiLink>
             <Typography color="error">Error</Typography>
           </Breadcrumbs>
         </Box>
@@ -153,7 +152,7 @@ const MovieDetailPage = () => {
             <ArrowBackIcon />
           </IconButton>
           <Breadcrumbs aria-label="breadcrumb">
-            <Link
+            <MuiLink
               component="button"
               underline="hover"
               color="inherit"
@@ -161,7 +160,7 @@ const MovieDetailPage = () => {
               sx={{ color: 'secondary.main' }}
             >
               Home
-            </Link>
+            </MuiLink>
             <Typography color="warning.dark">Not Found</Typography>
           </Breadcrumbs>
         </Box>

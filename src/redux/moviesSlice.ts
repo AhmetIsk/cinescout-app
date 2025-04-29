@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { getApiErrorMessage } from '../utils/api/errorHandlers';
-import { createSearchUrl } from '../utils/api/omdbApi';
+import { getApiErrorMessage } from '@utils/api/errorHandlers';
+import { createSearchUrl } from '@utils/api/omdbApi';
 
 // Movie type (basic for now)
 interface Movie {

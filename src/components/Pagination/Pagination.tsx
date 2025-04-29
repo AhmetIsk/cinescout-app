@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState, AppDispatch } from '../../redux/store';
-import { setCurrentPage, fetchMovies } from '../../redux/moviesSlice';
+import { RootState, AppDispatch } from '@redux/store';
+import { setCurrentPage, fetchMovies } from '@redux/moviesSlice';
 import { Pagination as MUIPagination, Box } from '@mui/material';
 
 const Pagination = () => {

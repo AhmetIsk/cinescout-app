@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState, AppDispatch } from '../redux/store';
-import { fetchEpisodeDetail, clearEpisodeDetail } from '../redux/episodeDetailSlice';
+import { RootState, AppDispatch } from '@redux/store';
+import { fetchEpisodeDetail, clearEpisodeDetail } from '@redux/episodeDetailSlice';
 import {
   Container,
   Box,
@@ -12,15 +12,15 @@ import {
   Typography,
   Stack,
   Breadcrumbs,
-  Link,
+  Link as MuiLink,
   IconButton,
   Rating,
   Chip,
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import MovieDetailSkeleton from '../components/Skeleton/MovieDetailSkeleton';
-import { ErrorDisplay } from '../utils/ui/errorDisplay';
-import { formatRuntime } from '../utils/formatting/stringUtils';
+import MovieDetailSkeleton from '@components/Skeleton/MovieDetailSkeleton';
+import { ErrorDisplay } from '@utils/ui/errorDisplay';
+import { formatRuntime } from '@utils/formatting/stringUtils';
 
 const EpisodeDetailPage = () => {
   const { id } = useParams(); // This is now the series ID
@@ -90,7 +90,7 @@ const EpisodeDetailPage = () => {
         <ArrowBackIcon />
       </IconButton>
       <Breadcrumbs aria-label="breadcrumb">
-        <Link
+        <MuiLink
           component="button"
           underline="hover"
           color="inherit"
@@ -98,8 +98,8 @@ const EpisodeDetailPage = () => {
           sx={{ color: 'secondary.main' }}
         >
           Home
-        </Link>
-        <Link
+        </MuiLink>
+        <MuiLink
           component="button"
           underline="hover"
           color="inherit"
@@ -107,7 +107,7 @@ const EpisodeDetailPage = () => {
           sx={{ color: 'secondary.main' }}
         >
           {seriesName}
-        </Link>
+        </MuiLink>
         <Typography color="text.primary">
           {episodeDetail ?
             `S${episodeDetail.Season}E${episodeDetail.Episode}: ${episodeDetail.Title.split(' - ')[1] || episodeDetail.Title}`
@@ -130,7 +130,7 @@ const EpisodeDetailPage = () => {
             <ArrowBackIcon />
           </IconButton>
           <Breadcrumbs aria-label="breadcrumb">
-            <Link
+            <MuiLink
               component="button"
               underline="hover"
               color="inherit"
@@ -138,8 +138,8 @@ const EpisodeDetailPage = () => {
               sx={{ color: 'secondary.main' }}
             >
               Home
-            </Link>
-            <Link
+            </MuiLink>
+            <MuiLink
               component="button"
               underline="hover"
               color="inherit"
@@ -147,7 +147,7 @@ const EpisodeDetailPage = () => {
               sx={{ color: 'secondary.main' }}
             >
               {seriesName}
-            </Link>
+            </MuiLink>
             <Typography color="primary">Loading episode details...</Typography>
           </Breadcrumbs>
         </Box>
@@ -169,7 +169,7 @@ const EpisodeDetailPage = () => {
             <ArrowBackIcon />
           </IconButton>
           <Breadcrumbs aria-label="breadcrumb">
-            <Link
+            <MuiLink
               component="button"
               underline="hover"
               color="inherit"
@@ -177,8 +177,8 @@ const EpisodeDetailPage = () => {
               sx={{ color: 'secondary.main' }}
             >
               Home
-            </Link>
-            <Link
+            </MuiLink>
+            <MuiLink
               component="button"
               underline="hover"
               color="inherit"
@@ -186,7 +186,7 @@ const EpisodeDetailPage = () => {
               sx={{ color: 'secondary.main' }}
             >
               {seriesName}
-            </Link>
+            </MuiLink>
             <Typography color="error">Error</Typography>
           </Breadcrumbs>
         </Box>
@@ -217,7 +217,7 @@ const EpisodeDetailPage = () => {
             <ArrowBackIcon />
           </IconButton>
           <Breadcrumbs aria-label="breadcrumb">
-            <Link
+            <MuiLink
               component="button"
               underline="hover"
               color="inherit"
@@ -225,8 +225,8 @@ const EpisodeDetailPage = () => {
               sx={{ color: 'secondary.main' }}
             >
               Home
-            </Link>
-            <Link
+            </MuiLink>
+            <MuiLink
               component="button"
               underline="hover"
               color="inherit"
@@ -234,7 +234,7 @@ const EpisodeDetailPage = () => {
               sx={{ color: 'secondary.main' }}
             >
               {seriesName}
-            </Link>
+            </MuiLink>
             <Typography color="warning.dark">Not Found</Typography>
           </Breadcrumbs>
         </Box>

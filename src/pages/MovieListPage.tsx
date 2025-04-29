@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState, AppDispatch } from '../redux/store';
-import { fetchMovies } from '../redux/moviesSlice';
-import SearchBar from '../components/SearchBar/SearchBar';
-import TypeFilter from '../components/TypeFilter/TypeFilter';
-import YearFilter from '../components/YearFilter/YearFilter';
-import MoviesTable from '../components/MoviesTable/MoviesTable';
-import Pagination from '../components/Pagination/Pagination';
+import { RootState, AppDispatch } from '@redux/store';
+import { fetchMovies } from '@redux/moviesSlice';
+import SearchBar from '@components/SearchBar';
+import { YearFilter, TypeFilter } from '@components/Filters';
+import MoviesTable from '@components/MoviesTable';
+import Pagination from '@components/Pagination';
 import { Box, CircularProgress, Container } from '@mui/material';
-import { ErrorDisplay } from '../utils/ui/errorDisplay';
+import { ErrorDisplay } from '@utils/ui/errorDisplay';
 
 const MovieListPage = () => {
   const dispatch = useDispatch<AppDispatch>();

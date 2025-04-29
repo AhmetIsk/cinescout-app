@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { getMovieDetailErrorMessage } from '../utils/api/errorHandlers';
-import { createMovieDetailUrl } from '../utils/api/omdbApi';
+import { getMovieDetailErrorMessage } from '@utils/api/errorHandlers';
+import { createMovieDetailUrl } from '@utils/api/omdbApi';
 
 // Episode type
 export interface Episode {

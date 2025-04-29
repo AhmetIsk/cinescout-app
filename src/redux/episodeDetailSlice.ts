@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { getMovieDetailErrorMessage } from '../utils/api/errorHandlers';
+import { getMovieDetailErrorMessage } from '@utils/api/errorHandlers';
 
 // Episode detail type
 export interface EpisodeDetail {

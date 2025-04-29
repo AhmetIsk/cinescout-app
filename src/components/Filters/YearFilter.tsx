@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../redux/store';
-import { setFilterYear, fetchMovies } from '../../redux/moviesSlice';
+import { AppDispatch } from '@redux/store';
+import { setFilterYear, fetchMovies } from '@redux/moviesSlice';
 import { TextField } from '@mui/material';
 
 const YearFilter = () => {

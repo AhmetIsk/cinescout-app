@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
+import { RootState } from '@redux/store';
 import { useNavigate } from 'react-router-dom';
 import {
   Table,
@@ -13,7 +13,7 @@ import {
   Typography,
   Box,
 } from '@mui/material';
-import { formatYear } from '../../utils/formatting/stringUtils';
+import { formatYear } from '@utils/formatting/stringUtils';
 import LocalMoviesIcon from '@mui/icons-material/LocalMovies';
 import TvIcon from '@mui/icons-material/Tv';
 

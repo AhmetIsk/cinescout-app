@@ -6,28 +6,37 @@ import {
   Typography,
   Container,
   IconButton,
-  Box
+  Box,
+  useTheme as useMuiTheme
 } from '@mui/material';
 import LocalMoviesIcon from '@mui/icons-material/LocalMovies';
+import ThemeToggle from '@components/ThemeToggle';
 
 const Header = () => {
   const navigate = useNavigate();
+  const theme = useMuiTheme();
+  const isDarkMode = theme.palette.mode === 'dark';
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: '#121212' }}>
+    <AppBar
+      position="static"
+      sx={{
+        backgroundColor: isDarkMode ? '#1a1a1a' : '#121212',
+        color: '#ffffff',
+      }}
+    >
       <Container maxWidth="lg">
         <Toolbar
           disableGutters
           sx={{
             display: 'flex',
-            justifyContent: 'center'
+            justifyContent: 'space-between'
           }}
         >
           <Box
             sx={{
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center',
               cursor: 'pointer'
             }}
             onClick={() => navigate('/')}
@@ -48,7 +57,6 @@ const Header = () => {
               sx={{
                 fontWeight: 700,
                 letterSpacing: '.1rem',
-                color: 'white',
                 textDecoration: 'none',
                 display: 'flex',
                 alignItems: 'center'
@@ -68,6 +76,9 @@ const Header = () => {
               </Typography>
             </Typography>
           </Box>
+
+          {/* Theme Toggle */}
+          <ThemeToggle />
         </Toolbar>
       </Container>
     </AppBar>

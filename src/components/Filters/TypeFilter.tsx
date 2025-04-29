@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState, AppDispatch } from '../../redux/store';
-import { setFilterType, fetchMovies } from '../../redux/moviesSlice';
+import { RootState, AppDispatch } from '@redux/store';
+import { setFilterType, fetchMovies } from '@redux/moviesSlice';
 import { FormControl, InputLabel, Select, MenuItem, SelectChangeEvent } from '@mui/material';
 
 const TypeFilter = () => {

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { RootState, AppDispatch } from '../../redux/store';
-import { fetchSeasonEpisodes, setSelectedSeason } from '../../redux/movieDetailSlice';
+import { RootState, AppDispatch } from '@redux/store';
+import { fetchSeasonEpisodes, setSelectedSeason } from '@redux/movieDetailSlice';
 import {
   Accordion,
   AccordionSummary,

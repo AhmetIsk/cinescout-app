@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../redux/store';
-import { setSearchQuery, fetchMovies } from '../../redux/moviesSlice';
+import { AppDispatch } from '@redux/store';
+import { setSearchQuery, fetchMovies } from '@redux/moviesSlice';
 import { TextField, IconButton, Box } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
