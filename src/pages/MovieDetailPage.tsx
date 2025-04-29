@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../redux/store';
 import { fetchMovieDetail, clearMovieDetail } from '../redux/movieDetailSlice';
+import { resetMoviesState } from '../redux/moviesSlice';
 import {
   Card,
   CardContent,
@@ -18,10 +19,11 @@ import {
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import MovieDetailSkeleton from '../components/Skeleton/MovieDetailSkeleton';
+import SeasonAccordion from '../components/SeasonAccordion/SeasonAccordion';
 import { ErrorDisplay } from '../utils/ui/errorDisplay';
 import { formatRuntime } from '../utils/formatting/stringUtils';
 
-const MovieDetailPage: React.FC = () => {
+const MovieDetailPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
@@ -37,10 +39,15 @@ const MovieDetailPage: React.FC = () => {
     };
   }, [dispatch, id]);
 
+  const handleBackClick = () => {
+    dispatch(resetMoviesState());
+    navigate('/');
+  };
+
   const renderHeader = () => (
     <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
       <IconButton
-        onClick={() => navigate('/')}
+        onClick={handleBackClick}
         size="small"
         sx={{ mr: 1, color: 'secondary.main' }}
         aria-label="back to search"
@@ -52,7 +59,7 @@ const MovieDetailPage: React.FC = () => {
           component="button"
           underline="hover"
           color="inherit"
-          onClick={() => navigate('/')}
+          onClick={handleBackClick}
           sx={{ color: 'secondary.main' }}
         >
           Home
@@ -201,6 +208,9 @@ const MovieDetailPage: React.FC = () => {
 
               <Typography variant="subtitle1" color="text.secondary" gutterBottom>
                 Released: {selectedMovie.Released} | Runtime: {formatRuntime(selectedMovie.Runtime)}
+                {selectedMovie.Type === 'series' && selectedMovie.totalSeasons && (
+                  <> | Seasons: {selectedMovie.totalSeasons}</>
+                )}
               </Typography>
 
               <Typography variant="body1" paragraph sx={{ my: 3 }}>
@@ -208,15 +218,15 @@ const MovieDetailPage: React.FC = () => {
               </Typography>
 
               <Typography variant="body2" color="text.secondary" paragraph>
-                <strong>Genre:</strong> {selectedMovie.Genre}
+                <Typography component="span" fontWeight="bold">Genre:</Typography> {selectedMovie.Genre}
               </Typography>
 
               <Typography variant="body2" color="text.secondary" paragraph>
-                <strong>Director:</strong> {selectedMovie.Director}
+                <Typography component="span" fontWeight="bold">Director:</Typography> {selectedMovie.Director}
               </Typography>
 
               <Typography variant="body2" color="text.secondary" paragraph>
-                <strong>Actors:</strong> {selectedMovie.Actors}
+                <Typography component="span" fontWeight="bold">Actors:</Typography> {selectedMovie.Actors}
               </Typography>
 
               <Typography variant="h6" color="primary" sx={{ mt: 2, fontWeight: 'bold' }}>
@@ -226,6 +236,13 @@ const MovieDetailPage: React.FC = () => {
           </Stack>
         </Stack>
       </Card>
+
+      {/* Season data for series */}
+      {selectedMovie.Type === 'series' && selectedMovie.totalSeasons && (
+        <Box sx={{ mt: 4 }}>
+          <SeasonAccordion />
+        </Box>
+      )}
     </Container>
   );
 };

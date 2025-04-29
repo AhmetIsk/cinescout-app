@@ -16,7 +16,7 @@ interface ErrorDisplayProps {
 /**
  * Reusable error display component with customizable styling based on error type
  */
-export const ErrorDisplay: React.FC<ErrorDisplayProps> = ({
+export const ErrorDisplay = ({
   title,
   message,
   suggestion,
@@ -24,7 +24,7 @@ export const ErrorDisplay: React.FC<ErrorDisplayProps> = ({
   buttonText = "Try Again",
   onButtonClick,
   type = 'error'
-}) => {
+}: ErrorDisplayProps) => {
   // Styling based on error type
   const getErrorStyles = () => {
     switch (type) {

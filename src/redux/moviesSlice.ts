@@ -17,7 +17,7 @@ interface MoviesState {
   movies: Movie[];
   searchQuery: string;
   filterYear: string;
-  filterType: 'movie' | 'series' | 'episode' | '';
+  filterType: 'movie' | 'series' | '';
   currentPage: number;
   totalResults: number;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
@@ -66,6 +66,9 @@ const moviesSlice = createSlice({
   name: 'movies',
   initialState,
   reducers: {
+    resetMoviesState: (state) => {
+      return initialState;
+    },
     setSearchQuery(state, action: PayloadAction<string>) {
       state.searchQuery = action.payload;
       state.currentPage = 1; // Reset to page 1
@@ -74,7 +77,7 @@ const moviesSlice = createSlice({
       state.filterYear = action.payload;
       state.currentPage = 1;
     },
-    setFilterType(state, action: PayloadAction<'movie' | 'series' | 'episode' | ''>) {
+    setFilterType(state, action: PayloadAction<'movie' | 'series' | ''>) {
       state.filterType = action.payload;
       state.currentPage = 1;
     },
@@ -110,6 +113,6 @@ const moviesSlice = createSlice({
   },
 });
 
-export const { setSearchQuery, setFilterYear, setFilterType, setCurrentPage } = moviesSlice.actions;
+export const { setSearchQuery, setFilterYear, setFilterType, setCurrentPage, resetMoviesState } = moviesSlice.actions;
 
 export default moviesSlice.reducer;

@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import LocalMoviesIcon from '@mui/icons-material/LocalMovies';
 
-const Header: React.FC = () => {
+const Header = () => {
   const navigate = useNavigate();
 
   return (
@@ -51,14 +51,21 @@ const Header: React.FC = () => {
                 color: 'white',
                 textDecoration: 'none',
                 display: 'flex',
-                alignItems: 'center',
-                '& span': {
-                  color: '#e50914',
-                  fontWeight: 800
-                }
+                alignItems: 'center'
               }}
             >
-              CINE<span>SCOUT</span>
+              CINE
+              <Typography
+                component="span"
+                variant="h6"
+                noWrap
+                sx={{
+                  color: '#e50914',
+                  fontWeight: 800
+                }}
+              >
+                SCOUT
+              </Typography>
             </Typography>
           </Box>
         </Toolbar>

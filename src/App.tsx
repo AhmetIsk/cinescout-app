@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import MovieListPage from './pages/MovieListPage';
 import MovieDetailPage from './pages/MovieDetailPage';
+import EpisodeDetailPage from './pages/EpisodeDetailPage';
 import Header from './components/Header/Header';
 import { Box, CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 
@@ -37,6 +38,7 @@ function App() {
           <Routes>
             <Route path="/" element={<MovieListPage />} />
             <Route path="/movie/:id" element={<MovieDetailPage />} />
+            <Route path="/episode/:id" element={<EpisodeDetailPage />} />
           </Routes>
         </Box>
       </Box>

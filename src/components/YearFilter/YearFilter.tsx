@@ -4,7 +4,7 @@ import { AppDispatch } from '../../redux/store';
 import { setFilterYear, fetchMovies } from '../../redux/moviesSlice';
 import { TextField } from '@mui/material';
 
-const YearFilter: React.FC = () => {
+const YearFilter = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [inputYear, setInputYear] = useState('');
 

@@ -5,7 +5,7 @@ import { setSearchQuery, fetchMovies } from '../../redux/moviesSlice';
 import { TextField, IconButton, Box } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
-const SearchBar: React.FC = () => {
+const SearchBar = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [inputValue, setInputValue] = useState('');
   const [error, setError] = useState<string | null>(null);

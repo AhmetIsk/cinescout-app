@@ -1,11 +1,10 @@
-// src/redux/movieDetailSlice.ts
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { getMovieDetailErrorMessage } from '../utils/api/errorHandlers';
 import { createMovieDetailUrl } from '../utils/api/omdbApi';
 
 // Episode type
-interface Episode {
+export interface Episode {
   Title: string;
   Released: string;
   Episode: string;
@@ -14,7 +13,7 @@ interface Episode {
 }
 
 // Season type
-interface Season {
+export interface Season {
   seasonNumber: number;
   episodes: Episode[];
 }
@@ -53,46 +52,60 @@ interface MovieDetail {
 interface MovieDetailState {
   selectedMovie: MovieDetail | null;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
-  episodesStatus: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
+  episodesStatus: 'idle' | 'loading' | 'succeeded' | 'failed';
+  selectedSeason: number;
+  loadedSeasons: number[]; // Keep track of seasons we've already loaded
 }
 
 const initialState: MovieDetailState = {
   selectedMovie: null,
   status: 'idle',
-  episodesStatus: 'idle',
   error: null,
+  episodesStatus: 'idle',
+  selectedSeason: 1,
+  loadedSeasons: [],
 };
 
-// Fetch season data for a TV series
+// Fetch season episodes thunk
 export const fetchSeasonEpisodes = createAsyncThunk(
   'movieDetail/fetchSeasonEpisodes',
-  async ({ seriesID, seasonNumber }: { seriesID: string, seasonNumber: number }, { rejectWithValue }) => {
+  async ({ id, seasonNumber }: { id: string; seasonNumber: number }, { rejectWithValue, getState }) => {
     try {
-      const apiKey = process.env.REACT_APP_OMDB_API_KEY;
-      if (!apiKey) {
-        throw new Error("No API key provided");
+      // Check if we already have this season's data to prevent duplicate requests
+      const state = getState() as { movieDetail: MovieDetailState };
+
+      // If we've already loaded this season or it's in the selectedMovie's seasons array, don't fetch again
+      if (state.movieDetail.loadedSeasons.includes(seasonNumber) ||
+          state.movieDetail.selectedMovie?.seasons?.some(season => season.seasonNumber === seasonNumber)) {
+        // Return the existing data to avoid duplicate requests
+        const existingSeason = state.movieDetail.selectedMovie?.seasons?.find(
+          season => season.seasonNumber === seasonNumber
+        );
+
+        if (existingSeason) {
+          return existingSeason;
+        }
       }
 
-      // Fetch the season data
-      const response = await axios.get(
-        `https://www.omdbapi.com/?apikey=${apiKey}&i=${seriesID}&Season=${seasonNumber}`
-      );
+      // Create the URL with series ID and season number
+      const url = `${process.env.REACT_APP_OMDB_API_URL}?apikey=${process.env.REACT_APP_OMDB_API_KEY}&i=${id}&Season=${seasonNumber}`;
+      const response = await axios.get(url);
 
+      // Handle API error responses
       if (response.data.Response === 'False') {
         return rejectWithValue({
           message: response.data.Error || `Could not load episodes for season ${seasonNumber}`
         });
       }
 
-      // Format the season data
       return {
         seasonNumber,
-        episodes: response.data.Episodes || []
+        episodes: response.data.Episodes
       };
     } catch (error) {
       return rejectWithValue({
-        message: getMovieDetailErrorMessage(error)
+        message: getMovieDetailErrorMessage(error, id)
       });
     }
   }
@@ -113,13 +126,10 @@ export const fetchMovieDetail = createAsyncThunk(
         });
       }
 
-      // If this is a TV series, fetch the first season's episodes
+      // If it's a series and has seasons, fetch the first season
       if (response.data.Type === 'series' && response.data.totalSeasons) {
-        // Fetch season 1 episodes
-        dispatch(fetchSeasonEpisodes({
-          seriesID: id,
-          seasonNumber: 1
-        }));
+        // Dispatch to fetch first season episodes
+        dispatch(fetchSeasonEpisodes({ id, seasonNumber: 1 }));
       }
 
       return response.data;
@@ -138,12 +148,13 @@ const movieDetailSlice = createSlice({
     clearMovieDetail(state) {
       state.selectedMovie = null;
       state.status = 'idle';
-      state.episodesStatus = 'idle';
       state.error = null;
+      state.episodesStatus = 'idle';
+      state.selectedSeason = 1;
+      state.loadedSeasons = [];
     },
     setSelectedSeason(state, action: PayloadAction<number>) {
-      // This will be used to track the currently selected season
-      // for the UI when we implement season switching
+      state.selectedSeason = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -153,10 +164,7 @@ const movieDetailSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchMovieDetail.fulfilled, (state, action) => {
-        state.selectedMovie = {
-          ...action.payload,
-          seasons: [] // Initialize empty seasons array for TV series
-        };
+        state.selectedMovie = action.payload;
         state.status = 'succeeded';
       })
       .addCase(fetchMovieDetail.rejected, (state, action) => {
@@ -164,19 +172,20 @@ const movieDetailSlice = createSlice({
         state.error = action.payload ? (action.payload as { message: string }).message :
                      action.error.message || "Failed to load movie details";
       })
+      // Handle fetchSeasonEpisodes actions
       .addCase(fetchSeasonEpisodes.pending, (state) => {
         state.episodesStatus = 'loading';
       })
       .addCase(fetchSeasonEpisodes.fulfilled, (state, action) => {
         if (state.selectedMovie) {
-          // Initialize seasons array if it doesn't exist
+          // Initialize seasons array if needed
           if (!state.selectedMovie.seasons) {
             state.selectedMovie.seasons = [];
           }
 
-          // Add the season data
+          // Find if this season already exists
           const existingSeasonIndex = state.selectedMovie.seasons.findIndex(
-            s => s.seasonNumber === action.payload.seasonNumber
+            season => season.seasonNumber === action.payload.seasonNumber
           );
 
           if (existingSeasonIndex >= 0) {
@@ -186,8 +195,14 @@ const movieDetailSlice = createSlice({
             // Add new season
             state.selectedMovie.seasons.push(action.payload);
           }
+
+          // Add to loaded seasons tracking array
+          if (!state.loadedSeasons.includes(action.payload.seasonNumber)) {
+            state.loadedSeasons.push(action.payload.seasonNumber);
+          }
+
+          state.episodesStatus = 'succeeded';
         }
-        state.episodesStatus = 'succeeded';
       })
       .addCase(fetchSeasonEpisodes.rejected, (state) => {
         state.episodesStatus = 'failed';

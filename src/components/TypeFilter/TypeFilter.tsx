@@ -4,16 +4,16 @@ import { RootState, AppDispatch } from '../../redux/store';
 import { setFilterType, fetchMovies } from '../../redux/moviesSlice';
 import { FormControl, InputLabel, Select, MenuItem, SelectChangeEvent } from '@mui/material';
 
-const TypeFilter: React.FC = () => {
+const TypeFilter = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { filterType } = useSelector((state: RootState) => state.movies);
 
   const handleChange = (event: SelectChangeEvent) => {
-    dispatch(setFilterType(event.target.value as 'movie' | 'series' | 'episode' | ''));
+    dispatch(setFilterType(event.target.value as 'movie' | 'series' | ''));
     dispatch(fetchMovies());
   };
 
-  return (df
+  return (
     <FormControl variant="outlined" fullWidth style={{ marginBottom: '1rem' }}>
       <InputLabel>Type</InputLabel>
       <Select
@@ -24,7 +24,6 @@ const TypeFilter: React.FC = () => {
         <MenuItem value="">All</MenuItem>
         <MenuItem value="movie">Movie</MenuItem>
         <MenuItem value="series">Series</MenuItem>
-        <MenuItem value="episode">Episode</MenuItem>
       </Select>
     </FormControl>
   );

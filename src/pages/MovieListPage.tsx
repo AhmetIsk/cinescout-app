@@ -10,7 +10,7 @@ import Pagination from '../components/Pagination/Pagination';
 import { Box, CircularProgress, Container } from '@mui/material';
 import { ErrorDisplay } from '../utils/ui/errorDisplay';
 
-const MovieListPage: React.FC = () => {
+const MovieListPage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { movies, status, error } = useSelector((state: RootState) => state.movies);
 

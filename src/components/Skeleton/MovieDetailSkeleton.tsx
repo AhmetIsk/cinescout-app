@@ -6,7 +6,7 @@ import {
   Skeleton
 } from '@mui/material';
 
-const MovieDetailSkeleton: React.FC = () => {
+const MovieDetailSkeleton = () => {
   return (
     <Card elevation={3}>
       <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} sx={{ p: { xs: 2, md: 3 } }}>
