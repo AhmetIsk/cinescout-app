@@ -1,2 +1,1 @@
-import MoviesTable from './MoviesTable';
-export default MoviesTable;
+export { default } from './MoviesTable';

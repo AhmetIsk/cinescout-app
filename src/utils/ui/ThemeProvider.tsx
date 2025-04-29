@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { useSelector } from 'react-redux';
-import { ThemeProvider as MUIThemeProvider, createTheme, PaletteMode } from '@mui/material';
+import { ThemeProvider as MUIThemeProvider, createTheme } from '@mui/material';
 import { selectThemeMode } from '@redux/themeSlice';
 
 interface ThemeProviderProps {

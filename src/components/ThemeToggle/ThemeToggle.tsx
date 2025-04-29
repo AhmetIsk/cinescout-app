@@ -1,11 +1,10 @@
 import React from 'react';
-import { IconButton, Tooltip, useTheme as useMuiTheme } from '@mui/material';
+import { IconButton, Tooltip } from '@mui/material';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { useTheme } from '@utils/ui/useTheme';
 
 const ThemeToggle = () => {
-  const muiTheme = useMuiTheme();
   const { mode, toggleTheme } = useTheme();
   const isDark = mode === 'dark';
 
