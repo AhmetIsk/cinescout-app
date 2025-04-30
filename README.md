@@ -5,6 +5,7 @@ CineScout is a modern web application built with React, TypeScript, and Redux th
 ## Live Demo
  [CINESCOUT](https://cinescout-wine.vercel.app/)
 
+
 ## Features
 
 - **Movie and TV Series Search**: Search for movies and TV shows with real-time filtering
