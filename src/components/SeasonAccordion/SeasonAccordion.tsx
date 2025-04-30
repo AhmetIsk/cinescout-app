@@ -58,7 +58,6 @@ const SeasonAccordion = () => {
     navigateToEpisode(selectedMovie.imdbID, seasonNumber, episodeNumber, episodeId, seriesTitle);
   };
 
-  // Create array of seasons from 1 to totalSeasons
   const seasons = Array.from({ length: totalSeasons }, (_, i) => i + 1);
 
   return (
