@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
+import { useLocation, useParams, useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '@redux/store';
 import { fetchEpisodeDetail, clearEpisodeDetail } from '@redux/episodeDetailSlice';
+import { fetchMovieDetail } from '@redux/movieDetailSlice';
 import {
   Container,
   Box,
@@ -21,6 +22,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import MovieDetailSkeleton from '@components/Skeleton/MovieDetailSkeleton';
 import { ErrorDisplay } from '@utils/ui/errorDisplay';
 import { formatRuntime } from '@utils/formatting/stringUtils';
+import { useNavigation } from '@utils/ui/useNavigation';
 
 const EpisodeDetailPage = () => {
   const { id } = useParams();
@@ -28,13 +30,13 @@ const EpisodeDetailPage = () => {
   const seasonParam = searchParams.get('season');
   const episodeParam = searchParams.get('episode');
   const episodeId = searchParams.get('episodeId');
-  const [seriesName, setSeriesName] = useState('Series');
+  const seriesName = useLocation().state?.seriesTitle || '';
 
   const season = seasonParam ? parseInt(seasonParam, 10) : undefined;
   const episode = episodeParam || undefined;
 
-  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
+  const { navigateToHome, navigateToMovie } = useNavigation();
   const { episode: episodeDetail, status, error } = useSelector(
     (state: RootState) => state.episodeDetail
   );
@@ -59,22 +61,8 @@ const EpisodeDetailPage = () => {
     };
   }, [dispatch, id, season, episode, episodeId]);
 
-  // Update series name when episode or movie details change
-  useEffect(() => {
-    if (episodeDetail?.Title) {
-      const parts = episodeDetail.Title.split(' - ');
-      if (parts.length > 1) {
-        setSeriesName(parts[0]);
-      } else if (episodeDetail.seriesID === id) {
-        setSeriesName(selectedMovie?.Title || 'Series');
-      }
-    } else if (selectedMovie?.Title) {
-      setSeriesName(selectedMovie.Title);
-    }
-  }, [episodeDetail, selectedMovie, id]);
-
   const handleBackClick = () => {
-    navigate(`/movie/${id}`);
+    navigateToMovie(id!);
   };
 
   const renderBreadcrumbs = () => (
@@ -92,7 +80,7 @@ const EpisodeDetailPage = () => {
           component="button"
           underline="hover"
           color="inherit"
-          onClick={() => navigate('/')}
+          onClick={navigateToHome}
           sx={{ color: 'secondary.main' }}
         >
           Home
@@ -101,7 +89,7 @@ const EpisodeDetailPage = () => {
           component="button"
           underline="hover"
           color="inherit"
-          onClick={() => navigate(`/movie/${id}`)}
+          onClick={() => navigateToMovie(id!)}
           sx={{ color: 'secondary.main' }}
         >
           {seriesName}
@@ -132,7 +120,7 @@ const EpisodeDetailPage = () => {
               component="button"
               underline="hover"
               color="inherit"
-              onClick={() => navigate('/')}
+              onClick={navigateToHome}
               sx={{ color: 'secondary.main' }}
             >
               Home
@@ -141,7 +129,7 @@ const EpisodeDetailPage = () => {
               component="button"
               underline="hover"
               color="inherit"
-              onClick={() => navigate(`/movie/${id}`)}
+              onClick={() => navigateToMovie(id!)}
               sx={{ color: 'secondary.main' }}
             >
               {seriesName}
@@ -171,7 +159,7 @@ const EpisodeDetailPage = () => {
               component="button"
               underline="hover"
               color="inherit"
-              onClick={() => navigate('/')}
+              onClick={navigateToHome}
               sx={{ color: 'secondary.main' }}
             >
               Home
@@ -180,7 +168,7 @@ const EpisodeDetailPage = () => {
               component="button"
               underline="hover"
               color="inherit"
-              onClick={() => navigate(`/movie/${id}`)}
+              onClick={() => navigateToMovie(id!)}
               sx={{ color: 'secondary.main' }}
             >
               {seriesName}
@@ -219,7 +207,7 @@ const EpisodeDetailPage = () => {
               component="button"
               underline="hover"
               color="inherit"
-              onClick={() => navigate('/')}
+              onClick={navigateToHome}
               sx={{ color: 'secondary.main' }}
             >
               Home
@@ -228,7 +216,7 @@ const EpisodeDetailPage = () => {
               component="button"
               underline="hover"
               color="inherit"
-              onClick={() => navigate(`/movie/${id}`)}
+              onClick={() => navigateToMovie(id!)}
               sx={{ color: 'secondary.main' }}
             >
               {seriesName}

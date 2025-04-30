@@ -66,9 +66,6 @@ const moviesSlice = createSlice({
   name: 'movies',
   initialState,
   reducers: {
-    resetMoviesState: (state) => {
-      return initialState;
-    },
     setSearchQuery(state, action: PayloadAction<string>) {
       state.searchQuery = action.payload;
       state.currentPage = 1; // Reset to page 1
@@ -113,6 +110,6 @@ const moviesSlice = createSlice({
   },
 });
 
-export const { setSearchQuery, setFilterYear, setFilterType, setCurrentPage, resetMoviesState } = moviesSlice.actions;
+export const { setSearchQuery, setFilterYear, setFilterType, setCurrentPage } = moviesSlice.actions;
 
 export default moviesSlice.reducer;

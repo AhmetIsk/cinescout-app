@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '@redux/store';
 import { fetchMovieDetail, clearMovieDetail } from '@redux/movieDetailSlice';
-import { resetMoviesState } from '@redux/moviesSlice';
 import {
   Card,
   CardMedia,
@@ -21,11 +20,12 @@ import MovieDetailSkeleton from '@components/Skeleton/MovieDetailSkeleton';
 import SeasonAccordion from '@components/SeasonAccordion';
 import { ErrorDisplay } from '@utils/ui/errorDisplay';
 import { formatRuntime } from '@utils/formatting/stringUtils';
+import { useNavigation } from '@utils/ui/useNavigation';
 
 const MovieDetailPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch<AppDispatch>();
-  const navigate = useNavigate();
+  const { navigateToHome } = useNavigation();
   const { selectedMovie, status, error } = useSelector((state: RootState) => state.movieDetail);
 
   useEffect(() => {
@@ -39,8 +39,7 @@ const MovieDetailPage = () => {
   }, [dispatch, id]);
 
   const handleBackClick = () => {
-    dispatch(resetMoviesState());
-    navigate('/');
+    navigateToHome();
   };
 
   const renderHeader = () => (
@@ -58,7 +57,7 @@ const MovieDetailPage = () => {
           component="button"
           underline="hover"
           color="inherit"
-          onClick={handleBackClick}
+          onClick={navigateToHome}
           sx={{ color: 'secondary.main' }}
         >
           Home
@@ -75,7 +74,7 @@ const MovieDetailPage = () => {
       <Container maxWidth="lg" sx={{ py: 4 }}>
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
           <IconButton
-            onClick={() => navigate('/')}
+            onClick={navigateToHome}
             size="small"
             sx={{ mr: 1, color: 'secondary.main' }}
             aria-label="back to search"
@@ -87,7 +86,7 @@ const MovieDetailPage = () => {
               component="button"
               underline="hover"
               color="inherit"
-              onClick={() => navigate('/')}
+              onClick={navigateToHome}
               sx={{ color: 'secondary.main' }}
             >
               Home
@@ -105,7 +104,7 @@ const MovieDetailPage = () => {
       <Container maxWidth="lg" sx={{ py: 4 }}>
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
           <IconButton
-            onClick={() => navigate('/')}
+            onClick={navigateToHome}
             size="small"
             sx={{ mr: 1, color: 'secondary.main' }}
             aria-label="back to search"
@@ -117,7 +116,7 @@ const MovieDetailPage = () => {
               component="button"
               underline="hover"
               color="inherit"
-              onClick={() => navigate('/')}
+              onClick={navigateToHome}
               sx={{ color: 'secondary.main' }}
             >
               Home
@@ -132,7 +131,7 @@ const MovieDetailPage = () => {
           suggestion="Try going back to the home page and selecting a different movie."
           showButton={true}
           buttonText="Return to Search"
-          onButtonClick={() => navigate('/')}
+          onButtonClick={navigateToHome}
           type="error"
         />
       </Container>
@@ -144,7 +143,7 @@ const MovieDetailPage = () => {
       <Container maxWidth="lg" sx={{ py: 4 }}>
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
           <IconButton
-            onClick={() => navigate('/')}
+            onClick={navigateToHome}
             size="small"
             sx={{ mr: 1, color: 'secondary.main' }}
             aria-label="back to search"
@@ -156,7 +155,7 @@ const MovieDetailPage = () => {
               component="button"
               underline="hover"
               color="inherit"
-              onClick={() => navigate('/')}
+              onClick={navigateToHome}
               sx={{ color: 'secondary.main' }}
             >
               Home
@@ -171,7 +170,7 @@ const MovieDetailPage = () => {
           suggestion="Please return to the home page and try searching for another movie."
           showButton={true}
           buttonText="Return to Search"
-          onButtonClick={() => navigate('/')}
+          onButtonClick={navigateToHome}
           type="warning"
         />
       </Container>

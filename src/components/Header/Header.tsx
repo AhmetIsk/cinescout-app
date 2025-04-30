@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
   AppBar,
   Toolbar,
@@ -11,9 +10,10 @@ import {
 } from '@mui/material';
 import LocalMoviesIcon from '@mui/icons-material/LocalMovies';
 import ThemeToggle from '@components/ThemeToggle';
+import { useNavigation } from '@utils/ui/useNavigation';
 
 const Header = () => {
-  const navigate = useNavigate();
+  const { navigateToHome } = useNavigation();
   const theme = useMuiTheme();
   const isDarkMode = theme.palette.mode === 'dark';
 
@@ -39,7 +39,7 @@ const Header = () => {
               alignItems: 'center',
               cursor: 'pointer'
             }}
-            onClick={() => navigate('/')}
+            onClick={navigateToHome}
           >
             <IconButton
               edge="start"

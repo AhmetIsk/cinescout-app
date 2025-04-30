@@ -1,7 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '@redux/store';
-import { useNavigate } from 'react-router-dom';
 import {
   Table,
   TableBody,
@@ -16,13 +15,14 @@ import {
 import { formatYear } from '@utils/formatting/stringUtils';
 import LocalMoviesIcon from '@mui/icons-material/LocalMovies';
 import TvIcon from '@mui/icons-material/Tv';
+import { useNavigation } from '@utils/ui/useNavigation';
 
 const MoviesTable = () => {
   const { movies } = useSelector((state: RootState) => state.movies);
-  const navigate = useNavigate();
+  const { navigateToMovie } = useNavigation();
 
   const handleRowClick = (id: string) => {
-    navigate(`/movie/${id}`);
+    navigateToMovie(id);
   };
 
   const getTypeIcon = (type: string) => {

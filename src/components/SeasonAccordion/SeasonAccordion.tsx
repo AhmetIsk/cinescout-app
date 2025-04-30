@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { RootState, AppDispatch } from '@redux/store';
 import { fetchSeasonEpisodes, setSelectedSeason } from '@redux/movieDetailSlice';
 import {
@@ -20,10 +19,11 @@ import {
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Rating } from '@mui/material';
+import { useNavigation } from '@utils/ui/useNavigation';
 
 const SeasonAccordion = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
+  const { navigateToEpisode } = useNavigation();
   const { selectedMovie, episodesStatus, selectedSeason } = useSelector(
     (state: RootState) => state.movieDetail
   );
@@ -54,8 +54,8 @@ const SeasonAccordion = () => {
     }
   };
 
-  const handleEpisodeClick = (episodeId: string, seasonNumber: number, episodeNumber: string) => {
-    navigate(`/episode/${selectedMovie.imdbID}?season=${seasonNumber}&episode=${episodeNumber}&episodeId=${episodeId}`);
+  const handleEpisodeClick = (episodeId: string, seasonNumber: number, episodeNumber: string, seriesTitle: string) => {
+    navigateToEpisode(selectedMovie.imdbID, seasonNumber, episodeNumber, episodeId, seriesTitle);
   };
 
   // Create array of seasons from 1 to totalSeasons
@@ -107,7 +107,7 @@ const SeasonAccordion = () => {
                       {seasonData.episodes.map(episode => (
                         <TableRow
                           key={episode.imdbID}
-                          onClick={() => handleEpisodeClick(episode.imdbID, seasonNumber, episode.Episode)}
+                          onClick={() => handleEpisodeClick(episode.imdbID, seasonNumber, episode.Episode, selectedMovie.Title)}
                           hover
                           sx={{
                             cursor: 'pointer',

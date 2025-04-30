@@ -114,7 +114,7 @@ export const fetchSeasonEpisodes = createAsyncThunk(
 // Fetch movie detail thunk
 export const fetchMovieDetail = createAsyncThunk(
   'movieDetail/fetchMovieDetail',
-  async (id: string, { rejectWithValue, dispatch }) => {
+  async (id: string, { rejectWithValue }) => {
     try {
       const url = createMovieDetailUrl(id, true);
       const response = await axios.get(url);
@@ -124,12 +124,6 @@ export const fetchMovieDetail = createAsyncThunk(
         return rejectWithValue({
           message: response.data.Error || `Could not load details for movie ID: ${id}`
         });
-      }
-
-      // If it's a series and has seasons, fetch the first season
-      if (response.data.Type === 'series' && response.data.totalSeasons) {
-        // Dispatch to fetch first season episodes
-        dispatch(fetchSeasonEpisodes({ id, seasonNumber: 1 }));
       }
 
       return response.data;
