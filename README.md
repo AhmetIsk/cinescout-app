@@ -2,6 +2,10 @@
 
 CineScout is a modern web application built with React, TypeScript, and Redux that provides a comprehensive movie and TV series database experience. The application allows users to search for movies and TV shows, view detailed information, and explore TV series episodes.
 
+## Live Demo
+ [CINESCOUT](https://cinescout-wine.vercel.app/)
+
+
 ## Features
 
 - **Movie and TV Series Search**: Search for movies and TV shows with real-time filtering
