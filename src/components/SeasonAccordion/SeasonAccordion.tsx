@@ -55,7 +55,6 @@ const SeasonAccordion = () => {
   };
 
   const handleEpisodeClick = (episodeId: string, seasonNumber: number, episodeNumber: string) => {
-    // Keep series ID as main parameter, and pass episode ID as query param
     navigate(`/episode/${selectedMovie.imdbID}?season=${seasonNumber}&episode=${episodeNumber}&episodeId=${episodeId}`);
   };
 
@@ -69,7 +68,6 @@ const SeasonAccordion = () => {
       </Typography>
 
       {seasons.map(seasonNumber => {
-        // Find season data if it exists
         const seasonData = selectedMovie.seasons?.find(
           season => season.seasonNumber === seasonNumber
         );

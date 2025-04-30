@@ -23,7 +23,7 @@ import { ErrorDisplay } from '@utils/ui/errorDisplay';
 import { formatRuntime } from '@utils/formatting/stringUtils';
 
 const EpisodeDetailPage = () => {
-  const { id } = useParams(); // This is now the series ID
+  const { id } = useParams();
   const [searchParams] = useSearchParams();
   const seasonParam = searchParams.get('season');
   const episodeParam = searchParams.get('episode');
@@ -66,7 +66,6 @@ const EpisodeDetailPage = () => {
       if (parts.length > 1) {
         setSeriesName(parts[0]);
       } else if (episodeDetail.seriesID === id) {
-        // If the episode doesn't have the series name embedded, use what we know
         setSeriesName(selectedMovie?.Title || 'Series');
       }
     } else if (selectedMovie?.Title) {
@@ -75,7 +74,6 @@ const EpisodeDetailPage = () => {
   }, [episodeDetail, selectedMovie, id]);
 
   const handleBackClick = () => {
-    // Navigate back to series detail page
     navigate(`/movie/${id}`);
   };
 
@@ -306,19 +304,19 @@ const EpisodeDetailPage = () => {
                 Released: {episodeDetail.Released} | Runtime: {formatRuntime(episodeDetail.Runtime)}
               </Typography>
 
-              <Typography variant="body1" paragraph sx={{ my: 3 }}>
+              <Typography variant="body1" sx={{ my: 3 }}>
                 {episodeDetail.Plot}
               </Typography>
 
-              <Typography variant="body2" color="text.secondary" paragraph>
+              <Typography variant="body2" color="text.secondary">
                 <Typography component="span" fontWeight="bold">Director:</Typography> {episodeDetail.Director}
               </Typography>
 
-              <Typography variant="body2" color="text.secondary" paragraph>
+              <Typography variant="body2" color="text.secondary">
                 <Typography component="span" fontWeight="bold">Writer:</Typography> {episodeDetail.Writer}
               </Typography>
 
-              <Typography variant="body2" color="text.secondary" paragraph>
+              <Typography variant="body2" color="text.secondary">
                 <Typography component="span" fontWeight="bold">Actors:</Typography> {episodeDetail.Actors}
               </Typography>
             </CardContent>

@@ -25,7 +25,6 @@ const MoviesTable = () => {
     navigate(`/movie/${id}`);
   };
 
-  // Get appropriate icon for the content type
   const getTypeIcon = (type: string) => {
     switch (type.toLowerCase()) {
       case 'movie':

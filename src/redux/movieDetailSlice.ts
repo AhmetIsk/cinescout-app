@@ -55,7 +55,7 @@ interface MovieDetailState {
   error: string | null;
   episodesStatus: 'idle' | 'loading' | 'succeeded' | 'failed';
   selectedSeason: number;
-  loadedSeasons: number[]; // Keep track of seasons we've already loaded
+  loadedSeasons: number[];
 }
 
 const initialState: MovieDetailState = {

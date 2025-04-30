@@ -212,19 +212,19 @@ const MovieDetailPage = () => {
                 )}
               </Typography>
 
-              <Typography variant="body1" paragraph sx={{ my: 3 }}>
+              <Typography variant="body1" sx={{ my: 3 }}>
                 {selectedMovie.Plot}
               </Typography>
 
-              <Typography variant="body2" color="text.secondary" paragraph>
+              <Typography variant="body2" color="text.secondary">
                 <Typography component="span" fontWeight="bold">Genre:</Typography> {selectedMovie.Genre}
               </Typography>
 
-              <Typography variant="body2" color="text.secondary" paragraph>
+              <Typography variant="body2" color="text.secondary">
                 <Typography component="span" fontWeight="bold">Director:</Typography> {selectedMovie.Director}
               </Typography>
 
-              <Typography variant="body2" color="text.secondary" paragraph>
+              <Typography variant="body2" color="text.secondary">
                 <Typography component="span" fontWeight="bold">Actors:</Typography> {selectedMovie.Actors}
               </Typography>
 
