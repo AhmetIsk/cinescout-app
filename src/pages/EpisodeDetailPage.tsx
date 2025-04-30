@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useLocation, useParams, useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '@redux/store';
 import { fetchEpisodeDetail, clearEpisodeDetail } from '@redux/episodeDetailSlice';
-import { fetchMovieDetail } from '@redux/movieDetailSlice';
 import {
   Container,
   Box,
@@ -39,9 +38,6 @@ const EpisodeDetailPage = () => {
   const { navigateToHome, navigateToMovie } = useNavigation();
   const { episode: episodeDetail, status, error } = useSelector(
     (state: RootState) => state.episodeDetail
-  );
-  const { selectedMovie } = useSelector(
-    (state: RootState) => state.movieDetail
   );
 
   useEffect(() => {
